@@ -110,6 +110,19 @@ EntityIdx rr_simulation_alloc_petal(struct rr_simulation *this, EntityIdx arena,
         physical->mass = 25 * powf(1.8, petal->rarity);
         physical->knockback_scale = 5;
     }
+    else if (id == rr_petal_id_gravel)
+    {
+        rr_component_physical_set_radius(physical, 15);
+        physical->mass = 999 * powf(1.8, petal->rarity);
+        physical->knockback_scale = 1;
+    }
+    else if (id == rr_petal_id_jelly)
+    {
+        rr_component_physical_set_radius(physical, 15);
+        physical->mass = 999 * powf(1.8, petal->rarity);
+        physical->knockback_scale = 999;
+    }
+
 
     rr_component_petal_set_id(petal, id);
     rr_component_petal_set_rarity(petal, rarity);
