@@ -178,6 +178,15 @@ static void damage_effect(struct rr_simulation *simulation, EntityIdx target,
                 (1 + sqrtf(RR_PETAL_RARITY_SCALE[petal->rarity].heal) / 3) *
                 (1 - physical->slow_resist);
         }
+        else if (petal->id == rr_petal_id_meat)
+        {
+            struct rr_component_physical *physical =
+                rr_simulation_get_physical(simulation, target);
+            physical->stun_ticks = 
+                25 *
+                (1 + sqrtf(RR_PETAL_RARITY_SCALE[petal->rarity].heal) / 3) *
+                (1 - physical->slow_resist);
+        }
         else if (petal->id == rr_petal_id_lightning)
         {
             lightning_petal_system(simulation, petal, target);
@@ -190,6 +199,14 @@ static void damage_effect(struct rr_simulation *simulation, EntityIdx target,
                 rr_component_health_do_damage(
                     simulation, health, attacker,
                     50 * RR_PETAL_DATA[petal->id].scale[petal->rarity].damage);
+        }
+        else if (petal->id == rr_petal_id_rock)
+        {
+            struct rr_component_health *health =
+                rr_simulation_get_health(simulation, target);
+            struct rr_component_health *flower_health =
+                rr_simulation_get_health(simulation, target);
+            float heal = 6 * RR_PETAL_RARITY_SCALE[petal->rarity].heal;
         }
     }
 }
