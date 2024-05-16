@@ -468,6 +468,65 @@ static void tick_ai_aggro_pachycephalosaurus(EntityIdx entity,
     }
 }
 
+static void tick_ai_aggro_hornet(EntityIdx entity,
+                                             struct rr_simulation *simulation)
+{
+    struct rr_component_ai *ai = rr_simulation_get_ai(simulation, entity);
+    struct rr_component_physical *physical =
+        rr_simulation_get_physical(simulation, entity);
+    if (has_new_target(ai, simulation))
+        ai->ai_state = rr_ai_state_waiting_to_attack;
+
+    switch (ai->ai_state)
+    {
+    case rr_ai_state_recovering_after_charge:
+    case rr_ai_state_idle:
+        tick_idle(entity, simulation);
+        break;
+
+    case rr_ai_state_idle_moving:
+        tick_idle_moving(entity, simulation);
+        break;
+    case rr_ai_state_waiting_to_attack:
+    {
+        if (ai->ticks_until_next_action == 0)
+        {
+            ai->ai_state = rr_ai_state_attacking;
+            ai->ticks_until_next_action = rand() % 75 + 33;
+            break;
+        }
+
+        struct rr_component_physical *physical2 =
+            rr_simulation_get_physical(simulation, ai->target_entity);
+
+        struct rr_vector delta = {physical2->x, physical2->y};
+        struct rr_vector target_pos = {physical->x, physical->y};
+        rr_vector_sub(&delta, &target_pos);
+        struct rr_vector prediction =
+            predict(delta, physical2->velocity, ai->has_prediction * 15);
+        rr_component_physical_set_angle(physical, rr_vector_theta(&prediction));
+        break;
+    }
+    case rr_ai_state_attacking:
+    {
+        if (ai->ticks_until_next_action == 0)
+        {
+            ai->ai_state = rr_ai_state_waiting_to_attack;
+            ai->ticks_until_next_action = rand() % 75 + 25;
+            break;
+        }
+
+        struct rr_vector accel;
+
+        rr_vector_from_polar(&accel, RR_PLAYER_SPEED * 1.9, physical->angle);
+        rr_vector_add(&physical->acceleration, &accel);
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 static void tick_ai_aggro_ankylosaurus(EntityIdx entity,
                                        struct rr_simulation *simulation)
 {
@@ -904,6 +963,8 @@ static void system_for_each(EntityIdx entity, void *simulation)
     switch (mob->id)
     {
     case rr_mob_id_fern:
+    case rr_mob_id_moss:
+    case rr_mob_id_stone:
     case rr_mob_id_tree:
         break;
     case rr_mob_id_ant:
@@ -916,12 +977,20 @@ static void system_for_each(EntityIdx entity, void *simulation)
     case rr_mob_id_pachycephalosaurus:
         tick_ai_aggro_pachycephalosaurus(entity, this);
         break;
+    case rr_mob_id_hornet:
+        tick_ai_aggro_hornet(entity, this);
+        break;
     case rr_mob_id_honeybee:
+        tick_ai_aggro_honeybee(entity, this);
+        break;
     case rr_mob_id_trex:
         tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 0.95);
         break;
     case rr_mob_id_dakotaraptor:
         tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 1.5);
+        break;
+    case rr_mob_id_lanternfly:
+        tick_ai_neutral_default(entity, this);
         break;
     case rr_mob_id_dragonfly:
         tick_ai_aggro_default(entity, this, RR_PLAYER_SPEED * 1.6);
@@ -946,6 +1015,9 @@ static void system_for_each(EntityIdx entity, void *simulation)
         break;
     case rr_mob_id_hornet:
         tick_ai_aggro_hornet(entity, this);
+        break;
+    case rr_mob_id_pectinodon:
+        tick_ai_neutral_pectinodon(entity, this);
         break;
     default:
         RR_UNREACHABLE("invalid ai aggro type state");
