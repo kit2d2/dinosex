@@ -274,7 +274,7 @@ void rr_game_init(struct rr_game *this)
             rr_ui_set_background(
                 rr_ui_v_container_init(rr_ui_container_init(), 10, 20,
                     rr_ui_v_container_init(rr_ui_container_init(), 0, 10,
-                        rr_ui_text_init("rrolf.io", 96, 0xffffffff),
+                        rr_ui_text_init("Xobdnas", 96, 0xffffffff),
                         rr_ui_h_container_init(
                             rr_ui_container_init(), 0, 20,
                             rr_ui_link_toggle(
@@ -288,13 +288,14 @@ void rr_game_init(struct rr_game *this)
                             rr_ui_join_button_init(),
                             NULL
                         ),
-                        /*
+                        
                         rr_ui_h_container_init(rr_ui_container_init(), 0, 10,
-                            rr_ui_biome_button_init("Hell Creek", 0xffff0000, 0),
-                            rr_ui_biome_button_init("Ocean", 0xffcdb423, 1),
+                            rr_ui_biome_button_init("Hell Creek", 0xff553012, 0),
+                            rr_ui_biome_button_init("Garden", 0xff60ba59, 1),
+                         //   rr_ui_biome_button_init("Ocean", 0xff4f42b5, 2),
                             NULL
                         ),
-                        */
+                        
                         rr_ui_set_justify(
                             rr_ui_h_container_init(rr_ui_container_init(), 0, 10, 
                             rr_ui_create_squad_button_init(),
@@ -316,7 +317,7 @@ void rr_game_init(struct rr_game *this)
                                             socket_ready,
                                             rr_ui_text_init("Joining Squad...", 24, 0xffffffff),
                                             rr_ui_squad_container_init(&this->squad),
-                                            rr_ui_text_init("Failed to join squad", 24, 0xffff2222),
+                                            rr_ui_text_init("Disconnected. Check for stable connection, otherwise servers are restarting/down.", 10, 0xffff2222),
                                             rr_ui_text_init("Squad doesn't exist", 24, 0xffff2222),
                                             rr_ui_text_init("Squad is full", 24, 0xffff2222),
                                             rr_ui_text_init("Kicked from squad", 24, 0xffff2222),
@@ -471,12 +472,12 @@ void rr_game_init(struct rr_game *this)
 
     this->craft_tooltip = rr_ui_container_add_element(
         this->window,
-        make_label_tooltip("Crafting")
+        make_label_tooltip("combinationing")
     );
 
     this->settings_tooltip = rr_ui_container_add_element(
         this->window,
-        make_label_tooltip("Settings")
+        make_label_tooltip("preferences")
     );
 
     this->abandon_game_tooltip = rr_ui_container_add_element(
@@ -491,18 +492,18 @@ void rr_game_init(struct rr_game *this)
 
     this->discord_tooltip = rr_ui_container_add_element(
         this->window,
-        make_label_tooltip("Join Our Discord!")
+        make_label_tooltip("discord")
     );
 
     this->link_reminder_tooltip = rr_ui_container_add_element(
         this->window,
-        make_label_tooltip("Login to save progess across devices")
+        make_label_tooltip("immma")
     );
-    
-    // this->anti_afk = rr_ui_container_add_element(
-    //     this->window,
-    //     rr_ui_anti_afk_container_init()
-    // );
+    /*
+     this->anti_afk = rr_ui_container_add_element(
+         this->window,
+         rr_ui_anti_afk_container_init()
+     );*/
 
     // clang-format on
 
@@ -1072,8 +1073,12 @@ void rr_game_tick(struct rr_game *this, float delta)
                 if (this->selected_biome == 0)
                     rr_renderer_draw_tile_hell_creek(this->renderer,
                                                      tile_index);
-                else
-                    rr_renderer_draw_tile_garden(this->renderer, tile_index);
+                else if (this->selected_biome == 1)
+                    rr_renderer_draw_tile_garden(this->renderer, 
+                                                 tile_index);
+                /*else 
+                    rr_renderer_draw_tile_ocean(this->renderer, 
+                                                tile_index);*/
                 rr_renderer_context_state_free(this->renderer, &state);
             }
         }
@@ -1269,7 +1274,7 @@ void rr_game_connect_socket(struct rr_game *this)
 #else
     rr_websocket_init(&this->socket);
     this->socket.user_data = this;
-    rr_websocket_connect_to(&this->socket, "ws://127.0.0.1:1234");
+    rr_websocket_connect_to(&this->socket, "wss://1234-pauljohnson1-rrolf-179ufcldqtz.ws-us110.gitpod.io/");
     // rr_websocket_connect_to(&this->socket, "45.79.197.197", 1234, 0);
 #endif
 }
