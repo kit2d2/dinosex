@@ -1,3 +1,4 @@
+StaticData.h
 // Copyright (C) 2024  Paul Johnson
 
 // This program is free software: you can redistribute it and/or modify
@@ -61,6 +62,7 @@ enum rr_biome_id
 {
     rr_biome_id_hell_creek,
     rr_biome_id_garden,
+    rr_biome_id_ocean,
     rr_biome_id_beehive,
     rr_biome_id_max
 };
@@ -108,6 +110,15 @@ enum rr_petal_id
     rr_petal_id_wax,
     rr_petal_id_sand,
     rr_petal_id_mint,
+    rr_petal_id_meat,
+    rr_petal_id_jelly,
+    rr_petal_id_pollen,
+    rr_petal_id_starfish,
+    rr_petal_id_fangs, //rock
+    rr_petal_id_rock,//fangs
+    rr_petal_id_placeholder, //air, placeholder
+    rr_petal_id_moss, 
+    rr_petal_id_stone,
 
     rr_petal_id_max
 };
@@ -134,7 +145,10 @@ enum rr_mob_id
     rr_mob_id_beehive,
     rr_mob_id_spider,
     rr_mob_id_house_centipede,
+    rr_mob_id_pectinodon,
+    rr_mob_id_moss,
     rr_mob_id_lanternfly,
+    rr_mob_id_stone,
     rr_mob_id_max
 };
 
@@ -202,6 +216,7 @@ extern double RR_MOB_WAVE_RARITY_COEFFICIENTS[rr_rarity_id_max + 1];
 extern uint32_t RR_MOB_DIFFICULTY_COEFFICIENTS[rr_mob_id_max];
 extern double RR_HELL_CREEK_MOB_ID_RARITY_COEFFICIENTS[rr_mob_id_max];
 extern double RR_GARDEN_MOB_ID_RARITY_COEFFICIENTS[rr_mob_id_max];
+extern double RR_OCEAN_MOB_ID_RARITY_COEFFICIENTS[rr_mob_id_max];
 
 extern uint32_t RR_RARITY_COLORS[rr_rarity_id_max];
 extern char const *RR_RARITY_NAMES[rr_rarity_id_max];
@@ -240,6 +255,7 @@ struct rr_maze_declaration
 
 // RR_DECLARE_MAZE(HELL_CREEK, 54)
 RR_DECLARE_MAZE(HELL_CREEK, 80)
+RR_DECLARE_MAZE(GARDEN, 80)
 RR_DECLARE_MAZE(BURROW, 4)
 
 extern struct rr_maze_declaration RR_MAZES[rr_biome_id_max];
