@@ -27,7 +27,7 @@
 #include <Shared/Rivet.h>
 #include <Shared/Utilities.h>
 
-char const *regions[3] = {"Closest", "Atlanta", "Frankfurt"};
+char const *regions[6] = {"mn(русский)", "jbx(gay)", "cat(femboy)", "x40cc", "epstien", "cat (me!?!)"};
 
 uint8_t selected = 0;
 
@@ -123,8 +123,8 @@ static void region_join_button_on_render(struct rr_ui_element *this,
     rr_renderer_set_text_size(renderer, this->abs_height / 2);
     rr_renderer_set_line_width(renderer, this->abs_height / 2 * 0.12);
     rr_renderer_begin_path(renderer);
-    rr_renderer_stroke_text(renderer, "Join", 0, 0);
-    rr_renderer_fill_text(renderer, "Join", 0, 0);
+    rr_renderer_stroke_text(renderer, "<-dum", 0, 0);
+    rr_renderer_fill_text(renderer, "<-dum", 0, 0);
 }
 
 static struct rr_ui_element *region_join_button_init()
@@ -245,11 +245,11 @@ struct rr_ui_element *rr_ui_settings_container_init(struct rr_game *game)
                 rr_ui_set_justify(
                     rr_ui_v_container_init(
                         rr_ui_container_init(), 10, 10,
-                        rr_ui_text_init("Settings", 24, 0xffffffff),
+                        rr_ui_text_init("preferences!", 24, 0xffffffff),
                         rr_ui_set_justify(
                             rr_ui_h_container_init(
                                 rr_ui_container_init(), 5, 5,
-                                rr_ui_text_init("Region:", 15, 0xffffffff),
+                                rr_ui_text_init("Basement:", 14, 0xffffffff),
                                 region_toggle_button_init(),
                                 region_join_button_init(), NULL),
                             -1, -1),
@@ -257,7 +257,7 @@ struct rr_ui_element *rr_ui_settings_container_init(struct rr_game *game)
                             rr_ui_h_container_init(
                                 rr_ui_container_init(), 5, 10,
                                 rr_ui_toggle_box_init(&game->cache.use_mouse),
-                                rr_ui_text_init("Mouse movement", 15,
+                                rr_ui_text_init("mousey movement", 15,
                                                 0xffffffff),
                                 NULL),
                             -1, -1),
@@ -266,7 +266,7 @@ struct rr_ui_element *rr_ui_settings_container_init(struct rr_game *game)
                                 rr_ui_container_init(), 5, 10,
                                 rr_ui_toggle_box_init(
                                     &game->cache.screen_shake),
-                                rr_ui_text_init("Screen shake", 15, 0xffffffff),
+                                rr_ui_text_init("Screen shakey", 15, 0xffffffff),
                                 NULL),
                             -1, -1),
                         rr_ui_set_justify(
@@ -274,7 +274,7 @@ struct rr_ui_element *rr_ui_settings_container_init(struct rr_game *game)
                                 rr_ui_container_init(), 5, 10,
                                 rr_ui_toggle_box_init(
                                     &game->cache.displaying_debug_information),
-                                rr_ui_text_init("Show debug info", 15,
+                                rr_ui_text_init("debug info", 15,
                                                 0xffffffff),
                                 NULL),
                             -1, -1),
@@ -282,7 +282,7 @@ struct rr_ui_element *rr_ui_settings_container_init(struct rr_game *game)
                             rr_ui_h_container_init(
                                 rr_ui_container_init(), 5, 10,
                                 rr_ui_toggle_box_init(&game->cache.tint_petals),
-                                rr_ui_text_init("Tint petals", 15, 0xffffffff),
+                                rr_ui_text_init("petal tint", 15, 0xffffffff),
                                 NULL),
                             -1, -1),
                         rr_ui_set_justify(
