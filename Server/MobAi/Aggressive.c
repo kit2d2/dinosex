@@ -250,6 +250,65 @@ void tick_ai_aggro_pteranodon(EntityIdx entity,
     }
 }
 
+void tick_ai_aggro_hornet(EntityIdx entity,
+                                      struct rr_simulation *simulation)
+{
+    struct rr_component_ai *ai = rr_simulation_get_ai(simulation, entity);
+    struct rr_component_physical *physical =
+        rr_simulation_get_physical(simulation, entity);
+    if (has_new_target(ai, simulation))
+        ai->ai_state = rr_ai_state_attacking;
+
+    switch (ai->ai_state)
+    {
+    case rr_ai_state_idle:
+        tick_idle(entity, simulation);
+        break;
+
+    case rr_ai_state_idle_moving:
+        tick_idle_move_default(entity, simulation);
+        break;
+    case rr_ai_state_attacking:
+    {
+        struct rr_vector accel;
+        struct rr_component_physical *physical2 =
+            rr_simulation_get_physical(simulation, ai->target_entity);
+
+        struct rr_vector delta = {physical2->x, physical2->y};
+        struct rr_vector target_pos = {physical->x, physical->y};
+        rr_vector_sub(&delta, &target_pos);
+        // struct rr_vector prediction = predict(delta, physical2->velocity, 4);
+        float target_angle = rr_vector_theta(&delta);
+
+        rr_component_physical_set_angle(physical, target_angle);
+
+        rr_vector_from_polar(&accel, RR_PLAYER_SPEED, physical->angle);
+        rr_vector_add(&physical->acceleration, &accel);
+        ai->ticks_until_next_action = 75;
+        if (rr_vector_magnitude_cmp(&delta, 100) == -1)
+            ai->ai_state = rr_ai_state_charging;
+        break;
+    }
+    case rr_ai_state_charging:
+    {
+        struct rr_vector accel;
+        struct rr_component_physical *physical2 =
+            rr_simulation_get_physical(simulation, ai->target_entity);
+
+        rr_vector_from_polar(&accel, RR_PLAYER_SPEED * 2.3, physical->angle);
+        rr_vector_add(&physical->acceleration, &accel);
+        if (ai->ticks_until_next_action == 0)
+        {
+            ai->ticks_until_next_action = 75;
+            ai->ai_state = rr_ai_state_attacking;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 void tick_ai_aggro_pachycephalosaurus(EntityIdx entity,
                                       struct rr_simulation *simulation)
 {
