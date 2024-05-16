@@ -72,6 +72,8 @@ static void system_for_each(EntityIdx entity, void *simulation)
     switch (mob->id)
     {
     case rr_mob_id_fern:
+    case rr_mob_id_moss:
+    case rr_mob_id_stone:
     case rr_mob_id_tree:
         break;
     case rr_mob_id_triceratops:
@@ -88,11 +90,23 @@ static void system_for_each(EntityIdx entity, void *simulation)
         break;
     case rr_mob_id_dakotaraptor:
         tick_ai_aggro_default(entity, this,
-                              RR_PLAYER_SPEED * (1.5 - mob->rarity * 0.05));
+                              4.0 * (1.5 - mob->rarity * 0.05));
+        break;
+    case rr_mob_id_spider:
+        tick_ai_aggro_default(entity, this,
+                              RR_PLAYER_SPEED * (1.4 - mob->rarity * 0.05));
         break;
     case rr_mob_id_pachycephalosaurus:
         tick_ai_aggro_pachycephalosaurus(entity, this);
         break;
+    case rr_mob_id_hornet:
+        tick_ai_aggro_hornet(entity, this);
+        break;
+    case rr_mob_id_lanternfly:
+        tick_ai_neutral_lanternfly(entity, this);
+        break;
+    case rr_mob_id_pectinodon:
+        tick_ai_neutral_pectinodon(entity, this);
     case rr_mob_id_ornithomimus:
         tick_ai_neutral_ornithomimus(entity, this);
         break;
