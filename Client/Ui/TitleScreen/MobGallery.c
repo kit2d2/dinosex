@@ -126,8 +126,8 @@ static void mob_container_animate(struct rr_ui_element *this,
 struct rr_ui_element *rr_ui_mob_container_init()
 {
     struct rr_ui_element *this = rr_ui_2d_container_init(
-        rr_rarity_id_max, rr_mob_id_edmontosaurus + 1, 15, 15);
-    for (uint8_t id = 0; id <= rr_mob_id_edmontosaurus; ++id)
+        rr_rarity_id_max, rr_mob_id_stone + 1, 15, 15);
+    for (uint8_t id = 0; id <= rr_mob_id_stone; ++id)
         for (uint8_t rarity = 0; rarity < rr_rarity_id_max; ++rarity)
             rr_ui_container_add_element(this, mob_button_init(id, rarity));
     rr_ui_set_background(this, 0x00000000);
@@ -135,7 +135,7 @@ struct rr_ui_element *rr_ui_mob_container_init()
         rr_ui_pad(rr_ui_set_justify(
                       rr_ui_v_container_init(
                           rr_ui_container_init(), 10, 10,
-                          rr_ui_text_init("Mob Gallery", 24, 0xffffffff),
+                          rr_ui_text_init("illegalized animal fighting ring", 24, 0xffffffff),
                           rr_ui_scroll_container_init(this, 400), NULL),
                       -1, 1),
                   10),
