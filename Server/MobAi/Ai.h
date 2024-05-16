@@ -40,9 +40,15 @@ void tick_ai_passive_meteor(EntityIdx, struct rr_simulation *);
 
 void tick_ai_neutral_triceratops(EntityIdx, struct rr_simulation *);
 void tick_ai_neutral_ornithomimus(EntityIdx, struct rr_simulation *);
+void tick_ai_neutral_honeybee(EntityIdx, struct rr_simulation *);
 void tick_ai_neutral_ankylosaurus(EntityIdx, struct rr_simulation *);
 
 void tick_ai_aggro_trex(EntityIdx, struct rr_simulation *);
+void tick_ai_aggro_spider(EntityIdx, struct rr_simulation *);
+void tick_ai_aggro_hornet(EntityIdx, struct rr_simulation *);
+void tick_ai_aggro_dragonfly(EntityIdx, struct rr_simulation *);
+void tick_ai_aggro_house_centipede(EntityIdx, struct rr_simulation *);
+void tick_ai_aggro_pectinodon(EntityIdx, struct rr_simulation *);
 void tick_ai_aggro_pteranodon(EntityIdx, struct rr_simulation *);
 void tick_ai_aggro_pachycephalosaurus(EntityIdx, struct rr_simulation *);
 void tick_ai_aggro_quetzalcoaltus(EntityIdx, struct rr_simulation *);
