@@ -116,8 +116,9 @@ enum rr_petal_id
     rr_petal_id_wax,       // 25
     rr_petal_id_sand,      // 26
     rr_petal_id_mint,      // 27
+    rr_petal_id_meat,      // 28
 
-    rr_petal_id_max,       // 28
+    rr_petal_id_max,       // 29
 };
 
 enum rr_mob_id
